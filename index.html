@@ -1,80 +1,57 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>הוויזואליזציה הראשונה</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            background-color: #ecf0f1;
-            color: #2c3e50;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-        h1 {
-            color: #2980b9;
-            font-size: 28px;
-        }
-        h2 {
-            color: #16a085;
-            font-size: 24px;
-            margin-top: 20px;
-        }
-        p {
-            font-size: 18px;
-            line-height: 1.8;
-        }
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            margin: 15px;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: bold;
-            color: white;
-            background-color: #27ae60;
-            border-radius: 6px;
-            transition: background 0.3s;
-        }
-        .btn:hover {
-            background-color: #219150;
-        }
-        .tableau-container {
-            margin-top: 30px;
-        }
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
-            border-radius: 10px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>דשבורדים עם Tableau</title>
+  <script type="module" src="https://public.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+    .active-btn {
+      background-color: #2563eb !important;
+      color: white !important;
+    }
+  </style>
 </head>
-<body>
-    <div class="container">
-        <h1>הוויזואליזציה הראשונה</h1>
-        <p>ברוכים הבאים! זהו פרויקט הדמיה המבוסס על Tableau, המציג נתונים עסקיים בצורה אינטראקטיבית ומאפשר חקר מעמיק.</p>
-        
-        <h2>אודות הפרויקט</h2>
-        <p>לוח המחוונים מציג ניתוח נתונים מתקדם, כולל מגמות וסטטיסטיקות, המאפשרות קבלת החלטות מושכלת.</p>
-        
-        <div class="tableau-container">
-            <iframe src="https://public.tableau.com/views/4_3_17423244076500/Dashboard1?:language=en-US&publish=yes&:display_count=yes&:toolbar=yes"></iframe>
-        </div>
-        
-        <h2>קישורים שימושיים</h2>
-        <a href="https://public.tableau.com/app/profile/ran.barsimantov" class="btn">פרופיל היוצר</a>
-        <a href="https://public.tableau.com/" class="btn">בקרו באתר Tableau</a>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-6 space-y-6">
+
+  <section class="text-center space-y-4" id="tableau">
+    <h2 class="text-3xl font-bold">Sausage Dashboard 🌭📊</h2>
+    <p class="text-lg">Feast your eyes on our featured visualization below - sausage stats galore! 👇</p>
+
+    <!-- כפתורים -->
+    <div class="flex flex-wrap gap-4 justify-center">
+      <button class="btn px-6 py-3 bg-gray-400 rounded-2xl shadow hover:bg-gray-500" onclick="changeDashboard(1, this)">דשבורד 1</button>
+      <button class="btn px-6 py-3 bg-gray-400 rounded-2xl shadow hover:bg-gray-500" onclick="changeDashboard(2, this)">דשבורד 2</button>
+      <button class="btn px-6 py-3 bg-gray-400 rounded-2xl shadow hover:bg-gray-500" onclick="changeDashboard(3, this)">דשבורד 3</button>
     </div>
+
+    <!-- Tableau Dashboard -->
+    <tableau-viz 
+      id="tableauViz"
+      src="https://public.tableau.com/views/SausageNewLetsPray/Dashboard1"
+      toolbar="bottom"
+      hide-tabs
+      width="100%"
+      height="800">
+    </tableau-viz>
+  </section>
+
+  <script>
+    const dashboards = {
+      1: "https://public.tableau.com/views/SausageNewLetsPray/Dashboard1",
+      2: "https://public.tableau.com/views/SausageNewLetsPray/Dashboard2",
+      3: "https://public.tableau.com/views/SausageNewLetsPray/Dashboard3"
+    };
+
+    async function changeDashboard(number, button) {
+      const viz = document.getElementById("tableauViz");
+      viz.src = dashboards[number];
+
+      document.querySelectorAll(".btn").forEach(btn => btn.classList.remove("active-btn"));
+      button.classList.add("active-btn");
+    }
+  </script>
+
 </body>
 </html>
